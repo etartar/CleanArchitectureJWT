@@ -17,7 +17,7 @@ namespace CleanArchitectureJWT.Infrastructure.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
         {
-            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity<Guid>>())
             {
                 switch (entry.State)
                 {
@@ -30,6 +30,10 @@ namespace CleanArchitectureJWT.Infrastructure.Persistence
                     case EntityState.Modified:
                         entry.Entity.LastModified = DateTime.Now;
                         entry.Entity.LastModifiedBy = "API";
+                        break;
+                    case EntityState.Deleted:
+                        entry.Entity.Deleted = DateTime.Now;
+                        entry.Entity.DeletedBy = "API";
                         break;
                 }
             }

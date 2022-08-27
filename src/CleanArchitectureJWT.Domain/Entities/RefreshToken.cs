@@ -2,7 +2,7 @@
 
 namespace CleanArchitectureJWT.Domain.Entities
 {
-    public class RefreshToken : AuditableEntity
+    public class RefreshToken : AuditableEntity<Guid>
     {
         public RefreshToken(Guid userId, string token)
         {
@@ -10,7 +10,17 @@ namespace CleanArchitectureJWT.Domain.Entities
             Token = token;
         }
 
+        #region Properties
+
         public Guid UserId { get; set; }
         public string Token { get; set; }
+
+        #endregion
+
+        #region Virtuals
+
+        public virtual User User { get; set; }
+
+        #endregion
     }
 }

@@ -10,6 +10,10 @@ namespace CleanArchitectureJWT.Infrastructure.Persistence.Configuration
         {
             builder.Property(x => x.UserId).IsRequired();
             builder.Property(x => x.Token).IsRequired();
+
+            builder.HasOne(x => x.User).WithMany(y => y.RefreshTokens).HasForeignKey(x => x.UserId);
+
+            builder.HasQueryFilter(x => !x.Deleted.HasValue);
         }
     }
 }

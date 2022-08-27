@@ -2,19 +2,19 @@
 
 namespace CleanArchitectureJWT.Domain.Common
 {
-    public abstract class Entity : IEntity<Guid>
+    public abstract class Entity<T> : IEntity<T>
     {
-        public Guid Id { get; set; }
+        public T Id { get; set; }
 
         protected Entity() { }
-        protected Entity(Guid id)
+        protected Entity(T id)
         {
             Id = id;
         }
 
         public override bool Equals(object? obj)
         {
-            if (obj is not Entity other)
+            if (obj is not Entity<T> other)
                 return false;
 
             if (ReferenceEquals(this, other))
@@ -26,7 +26,7 @@ namespace CleanArchitectureJWT.Domain.Common
             return Id.Equals(other.Id);
         }
 
-        public static bool operator ==(Entity a, Entity b) => a.Equals(b);
-        public static bool operator !=(Entity a, Entity b) => !(a == b);
+        public static bool operator ==(Entity<T> a, Entity<T> b) => a.Equals(b);
+        public static bool operator !=(Entity<T> a, Entity<T> b) => !(a == b);
     }
 }
