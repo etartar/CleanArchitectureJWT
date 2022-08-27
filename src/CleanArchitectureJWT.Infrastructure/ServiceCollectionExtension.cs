@@ -1,5 +1,6 @@
 ﻿using CleanArchitectureJWT.Application.Common.Interfaces;
 using CleanArchitectureJWT.Infrastructure.Persistence;
+using CleanArchitectureJWT.Infrastructure.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,11 @@ namespace CleanArchitectureJWT.Infrastructure
             });
 
             services.AddScoped<IApplicationDbContext>(x => x.GetService<IdentityDbContext>()!);
+            services.AddScoped<ITokenGenerator, TokenGenerator>();
+            services.AddScoped<IAccessTokenService, AccessTokenService>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IRefreshTokenValidator, RefreshTokenValidator>();
         }
     }
 }
